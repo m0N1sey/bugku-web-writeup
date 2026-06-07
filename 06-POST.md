@@ -29,5 +29,5 @@
 在请求体（body）中添加：what=flag
 
 ### 5. 发送请求
-点击 **Forward** 发送修改后的请求，页面返回 flag。
+点击 **Forward** 发送修改后的请求，页面返回 flag
 
