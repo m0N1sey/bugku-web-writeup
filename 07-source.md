@@ -207,17 +207,6 @@ index aa6f6dc..726e5d1 100644
 
 ### 6. 其他尝试过的命令
 
-**查看所有 commit 历史**：
-```bash
-git log --all --oneline
-```
-
-**输出**：
-```
-d256328 (HEAD -> master) flag is here?
-e0b8e8e this is index.html
-```
-
 **查看 stash（暂存区）**：
 ```bash
 git stash list
@@ -234,15 +223,6 @@ git branch -a
 # * master
 #   remotes/origin/HEAD -> origin/master
 #   remotes/origin/master
-```
-
-**尝试查看日志文件中的 commit**：
-```bash
-git show d256328b55ccd8c985237e870a16a3e840f2aa2a
-# 输出：fatal: bad object d256328b55ccd8c985237e870a16a3e840f2aa2a
-
-# 说明：日志中的完整 commit ID 和实际 objects 中的不匹配，
-# 因为 GitHack 只恢复了部分文件，没有完整恢复所有 object
 ```
 
 **查找系统中的 flag.txt**：
